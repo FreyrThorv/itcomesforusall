@@ -1,5 +1,5 @@
 import React from "react";
-import "./App.css";
+import "./App.scss";
 
 type OptionType = {
 	value: string;
@@ -29,6 +29,7 @@ function App() {
 
 	const [age, setAge] = React.useState("");
 	const [gender, setGender] = React.useState("");
+	const [deathLikelihood, setDeathLikelihood] = React.useState(false);
 
 	const handleChange = (event: React.FormEvent<HTMLSelectElement>) => {
 		const target = event.target as HTMLTextAreaElement;
@@ -40,25 +41,70 @@ function App() {
 		setGender(target.value);
 	};
 
+	const displayDeathLikelihood = () => {
+		setDeathLikelihood(true);
+	};
+
+	const backToStart = () => {
+		setDeathLikelihood(false);
+	};
+
 	return (
 		<div className="front-page">
 			<div className="container">
-				<span className="spooky-boy" role="img" aria-label="Spooky skull">
-					💀
-				</span>
-				<p>select your age and gender</p>
-				<label>Age:</label>
-				<select value={age} onChange={handleChange}>
-					{ageOptions.map((elem) => {
-						return <option value={elem.value}>{elem.label}</option>;
-					})}
-				</select>{" "}
-				<label>Gender:</label>
-				<select value={gender} onChange={genderChange}>
-					{genderOptions.map((elem) => {
-						return <option value={elem.value}>{elem.label}</option>;
-					})}
-				</select>
+				<div className="intro">
+					<span className="spooky-boy" role="img" aria-label="Spooky skull">
+						💀
+					</span>
+					<p>it comes for us all</p>
+					<p className="subtext">Check your odds</p>
+				</div>
+
+				{!deathLikelihood ? (
+					<div className="death-form">
+						<div>
+							<label>Age</label>
+							<select value={age} onChange={handleChange}>
+								{ageOptions.map((elem) => {
+									return (
+										<option key={elem.value} value={elem.value}>
+											{elem.label}
+										</option>
+									);
+								})}
+							</select>
+						</div>
+						<div>
+							<label>Gender</label>
+							<select value={gender} onChange={genderChange}>
+								{genderOptions.map((elem) => {
+									return (
+										<option key={elem.value} value={elem.value}>
+											{elem.label}
+										</option>
+									);
+								})}
+							</select>
+						</div>
+
+						<input
+							className="submit-btn"
+							type="submit"
+							value="How long do I have, Doc?"
+							onClick={displayDeathLikelihood}
+						/>
+					</div>
+				) : (
+					<div className="death-results">
+						<p>Your odds of dying in the next 10 years:</p>
+						<p className="death-percentage">
+							<b>5%</b>
+						</p>
+						<a href="/" onClick={backToStart}>
+							← back
+						</a>
+					</div>
+				)}
 			</div>
 		</div>
 	);

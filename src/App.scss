@@ -1,0 +1,71 @@
+.front-page {
+	text-align: center;
+}
+
+.container {
+	background-color: #282c34;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: calc(10px + 2vmin);
+	color: white;
+}
+
+.intro {
+	margin-bottom: 20px;
+	.spooky-boy {
+		font-size: 100px;
+	}
+
+	p {
+		margin-bottom: 0;
+	}
+
+	.subtext {
+		font-size: 11px;
+		margin-top: 0px;
+	}
+}
+
+.app-link {
+	color: #61dafb;
+}
+
+.death-form {
+	label {
+		font-size: 16px;
+		margin-right: 5px;
+	}
+
+	.submit-btn {
+		margin-top: 40px;
+		padding: 9px 18px;
+		font-size: 15px;
+		font-weight: bold;
+		color: white;
+		background-color: #394f00;
+		border: none;
+	}
+}
+
+.death-results {
+	p {
+		margin-top: 0px;
+		margin-bottom: 0px;
+		font-size: 16px;
+	}
+
+	a {
+		color: darkolivegreen;
+		margin-top: 50px;
+		font-size: 14px;
+		display: block;
+	}
+
+	.death-percentage {
+		font-size: 25px;
+		margin-top: 10px;
+	}
+}
