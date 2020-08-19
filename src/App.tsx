@@ -1,5 +1,11 @@
 import React from "react";
 import "./App.scss";
+import deathTable from "./uk_life_table.json";
+
+type AgeOptionType = {
+	value: number;
+	label: number;
+};
 
 type OptionType = {
 	value: string;
@@ -7,33 +13,24 @@ type OptionType = {
 };
 
 function App() {
-	const ageOptions: OptionType[] = [
-		{ value: "1", label: "1" },
-		{ value: "2", label: "2" },
-		{ value: "3", label: "3" },
-		{ value: "4", label: "4" },
-		{ value: "5", label: "5" },
-		{ value: "6", label: "6" },
-		{ value: "7", label: "7" },
-		{ value: "8", label: "8" },
-		{ value: "9", label: "9" },
-		{ value: "10", label: "10" },
-		{ value: "11", label: "11" },
-		{ value: "12", label: "12" },
-	]; // etc
-
+	const ageOptions: AgeOptionType[] = [];
+	deathTable.forEach((segment) => {
+		if (segment.gender === "male" && segment.age <= 90) {
+			ageOptions.push({ value: segment.age, label: segment.age });
+		}
+	});
 	const genderOptions: OptionType[] = [
 		{ value: "female", label: "female" },
 		{ value: "male", label: "male" },
 	];
 
-	const [age, setAge] = React.useState("");
-	const [gender, setGender] = React.useState("");
+	const [age, setAge] = React.useState(0);
+	const [gender, setGender] = React.useState("female");
 	const [deathLikelihood, setDeathLikelihood] = React.useState(false);
 
 	const handleChange = (event: React.FormEvent<HTMLSelectElement>) => {
 		const target = event.target as HTMLTextAreaElement;
-		setAge(target.value);
+		setAge(parseInt(target.value));
 	};
 
 	const genderChange = (event: React.FormEvent<HTMLSelectElement>) => {
@@ -48,6 +45,26 @@ function App() {
 	const backToStart = () => {
 		setDeathLikelihood(false);
 	};
+
+	type StatsInterface = {
+		age: number;
+		gender: string;
+	};
+
+	const generateStats = (params: StatsInterface) => {
+		const { age, gender } = params;
+
+		const segment = deathTable.filter((segment) => {
+			if (segment.age === age && segment.gender === gender) {
+				return segment;
+			}
+			return null;
+		});
+
+		return segment[0];
+	};
+
+	const segment = generateStats({ age, gender });
 
 	return (
 		<div className="front-page">
@@ -98,11 +115,19 @@ function App() {
 					<div className="death-results">
 						<p>Your odds of dying in the next 10 years:</p>
 						<p className="death-percentage">
-							<b>5%</b>
+							<b>{segment.dying_10_year}</b>
 						</p>
-						<a href="/" onClick={backToStart}>
+						<p>Your odds of dying in the next 5 years:</p>
+						<p className="death-percentage">
+							<b>{segment.dying_5_year}</b>
+						</p>
+						<p>Your odds of dying in the next 1 year:</p>
+						<p className="death-percentage">
+							<b>{segment.dying_1_year}</b>
+						</p>
+						<div className="go-back" onClick={backToStart}>
 							← back
-						</a>
+						</div>
 					</div>
 				)}
 			</div>

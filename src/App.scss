@@ -57,7 +57,9 @@
 		font-size: 16px;
 	}
 
-	a {
+	.go-back {
+		text-decoration: underline;
+		cursor: pointer;
 		color: darkolivegreen;
 		margin-top: 50px;
 		font-size: 14px;
@@ -67,5 +69,6 @@
 	.death-percentage {
 		font-size: 25px;
 		margin-top: 10px;
+		margin-bottom: 20px;
 	}
 }
