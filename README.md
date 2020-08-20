@@ -1,1 +1,1 @@
-💀Spooky app for calculating your % risk of death within the next year.
+💀 Spooky app for calculating your % risk of death within the next year(s).
