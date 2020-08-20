@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.scss";
 import deathTable from "./uk_life_table.json";
 import Footer from "./Footer";
@@ -25,47 +25,15 @@ function App() {
 		{ value: "male", label: "male" },
 	];
 
-	const [age, setAge] = React.useState(0);
-	const [gender, setGender] = React.useState("female");
-	const [deathLikelihood, setDeathLikelihood] = React.useState(false);
+	const age = useFormInput("0");
+	const gender = useFormInput("female");
+	const [deathLikelihood, setDeathLikelihood] = useState(false);
 
-	const handleChange = (event: React.FormEvent<HTMLSelectElement>) => {
-		const target = event.target as HTMLTextAreaElement;
-		setAge(parseInt(target.value));
+	const toggleDeathLikelihood = () => {
+		setDeathLikelihood(!deathLikelihood);
 	};
 
-	const genderChange = (event: React.FormEvent<HTMLSelectElement>) => {
-		const target = event.target as HTMLTextAreaElement;
-		setGender(target.value);
-	};
-
-	const displayDeathLikelihood = () => {
-		setDeathLikelihood(true);
-	};
-
-	const backToStart = () => {
-		setDeathLikelihood(false);
-	};
-
-	type StatsInterface = {
-		age: number;
-		gender: string;
-	};
-
-	const generateStats = (params: StatsInterface) => {
-		const { age, gender } = params;
-
-		const segment = deathTable.filter((segment) => {
-			if (segment.age === age && segment.gender === gender) {
-				return segment;
-			}
-			return null;
-		});
-
-		return segment[0];
-	};
-
-	const segment = generateStats({ age, gender });
+	const segment = generateStats({ age: parseInt(age.value), gender: gender.value });
 
 	return (
 		<div className="front-page">
@@ -82,7 +50,7 @@ function App() {
 					<div className="death-form">
 						<div>
 							<label>Age</label>
-							<select value={age} onChange={handleChange}>
+							<select {...age}>
 								{ageOptions.map((elem) => {
 									return (
 										<option key={elem.value} value={elem.value}>
@@ -94,7 +62,7 @@ function App() {
 						</div>
 						<div>
 							<label>Gender</label>
-							<select value={gender} onChange={genderChange}>
+							<select {...gender}>
 								{genderOptions.map((elem) => {
 									return (
 										<option key={elem.value} value={elem.value}>
@@ -109,7 +77,7 @@ function App() {
 							className="submit-btn"
 							type="submit"
 							value="How long do I have, Doc?"
-							onClick={displayDeathLikelihood}
+							onClick={toggleDeathLikelihood}
 						/>
 					</div>
 				) : (
@@ -135,7 +103,7 @@ function App() {
 								ONS National life tables for the UK, 2016 - 2018
 							</a>
 						</p>
-						<div className="go-back" onClick={backToStart}>
+						<div className="go-back" onClick={toggleDeathLikelihood}>
 							← back
 						</div>
 					</div>
@@ -145,5 +113,27 @@ function App() {
 		</div>
 	);
 }
+
+function useFormInput(initialValue: string) {
+	const [value, setValue] = useState(initialValue);
+	const handleChange = (event: React.FormEvent<HTMLSelectElement>) => {
+		const target = event.target as HTMLTextAreaElement;
+		setValue(target.value);
+	};
+	return { value, onChange: handleChange };
+}
+
+const generateStats = (params: { age: number; gender: string }) => {
+	const { age, gender } = params;
+
+	const segment = deathTable.filter((segment) => {
+		if (segment.age === age && segment.gender === gender) {
+			return segment;
+		}
+		return null;
+	});
+
+	return segment[0];
+};
 
 export default App;
