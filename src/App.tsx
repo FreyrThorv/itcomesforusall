@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.scss";
 import deathTable from "./uk_life_table.json";
+import Footer from "./Footer";
 
 type AgeOptionType = {
 	value: number;
@@ -140,6 +141,7 @@ function App() {
 					</div>
 				)}
 			</div>
+			<Footer />
 		</div>
 	);
 }
