@@ -47,6 +47,7 @@
 		color: white;
 		background-color: #394f00;
 		border: none;
+		cursor: pointer;
 	}
 }
 
@@ -60,10 +61,18 @@
 	.go-back {
 		text-decoration: underline;
 		cursor: pointer;
-		color: darkolivegreen;
+		color: white;
 		margin-top: 50px;
 		font-size: 14px;
 		display: block;
+	}
+
+	.data-source {
+		margin-top: 70px;
+		font-size: 12px;
+		a {
+			color: white;
+		}
 	}
 
 	.death-percentage {

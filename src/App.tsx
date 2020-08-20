@@ -125,6 +125,15 @@ function App() {
 						<p className="death-percentage">
 							<b>{segment.dying_1_year}</b>
 						</p>
+						<p className="data-source">
+							Source:{" "}
+							<a
+								target="_blank"
+								rel="noopener noreferrer"
+								href="https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/lifeexpectancies/datasets/nationallifetablesunitedkingdomreferencetables">
+								ONS National life tables for the UK, 2016 - 2018
+							</a>
+						</p>
 						<div className="go-back" onClick={backToStart}>
 							← back
 						</div>
