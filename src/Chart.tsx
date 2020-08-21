@@ -35,6 +35,7 @@ function Chart(props: propTypes) {
 	const labels = deathTable
 		.filter((segment) => {
 			if (segment.gender === gender) return segment;
+			return null;
 		})
 		.map((segment) => {
 			return segment.age;
