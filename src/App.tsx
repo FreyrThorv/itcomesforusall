@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./App.scss";
 import deathTable from "./uk_life_table.json";
 import Footer from "./Footer";
+import Chart from "./Chart";
 
 type AgeOptionType = {
 	value: number;
@@ -94,6 +95,7 @@ function App() {
 						<p className="death-percentage">
 							<b>{segment.dying_1_year}</b>
 						</p>
+						<Chart />
 						<p className="data-source">
 							Source:{" "}
 							<a
