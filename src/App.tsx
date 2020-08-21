@@ -95,7 +95,7 @@ function App() {
 						<p className="death-percentage">
 							<b>{segment.dying_1_year}</b>
 						</p>
-						<p>Your current life expectancy:</p>
+						<p>Average years left:</p>
 						<p className="death-percentage">
 							<b>{segment.life_expectancy} years left</b>
 						</p>
