@@ -1,6 +1,29 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
+import { ChartTooltipItem, ChartData } from "chart.js";
 import deathTable from "./uk_life_table.json";
+
+function getYearlyRiskData(period: number) {
+	const periodKey = "dying_" + period + "_year";
+	type periodKeys = {
+		dying_1_year: string;
+		dying_5_year: string;
+		dying_10_year: string;
+	};
+	const lastAgeWithData = 100 - period;
+
+	const data = deathTable
+		.filter((segment) => {
+			if (segment.gender === "male" && segment.age < lastAgeWithData) return segment;
+			return null;
+		})
+		.map((segment) => {
+			let percentage = parseFloat(segment[periodKey as keyof periodKeys]) / 100;
+			return percentage;
+		});
+
+	return data;
+}
 
 const labels = deathTable
 	.filter((segment) => {
@@ -10,47 +33,32 @@ const labels = deathTable
 		return segment.age;
 	});
 
-const ten_year_rate = deathTable
-	.filter((segment) => {
-		if (segment.gender === "male" && segment.age < 90) return segment;
-	})
-	.map((segment) => {
-		return (parseFloat(segment.dying_10_year) / 100).toFixed(5);
-	});
+const ten_year_rate: number[] = getYearlyRiskData(10);
+const five_year_rate: number[] = getYearlyRiskData(5);
+const one_year_rate: number[] = getYearlyRiskData(1);
 
-const five_year_rate = deathTable
-	.filter((segment) => {
-		if (segment.gender === "male" && segment.age < 95) return segment;
-	})
-	.map((segment) => {
-		return (parseFloat(segment.dying_5_year) / 100).toFixed(5);
-	});
-
-const one_year_rate = deathTable
-	.filter((segment) => {
-		if (segment.gender === "male" && segment.age < 99) return segment;
-	})
-	.map((segment) => {
-		return (parseFloat(segment.dying_1_year) / 100).toFixed(5);
-	});
-
-const data = {
-	labels: labels,
-	options: {
-		tooltips: {
-			callbacks: {
-				label: function (tooltipItem: any, data: any) {
-					var label = data.datasets[tooltipItem.datasetIndex].label || "";
-
-					if (label) {
-						label += ": ";
-					}
-					label += tooltipItem.yLabel * 100 + "%";
-					return label;
-				},
+const options = {
+	tooltips: {
+		callbacks: {
+			label: function (tooltipItem: ChartTooltipItem, data: ChartData) {
+				let label;
+				if (tooltipItem && tooltipItem.datasetIndex !== undefined && data.datasets !== undefined) {
+					label = data.datasets[tooltipItem.datasetIndex].label || "";
+				}
+				if (label) {
+					label += ": ";
+				}
+				if (tooltipItem && tooltipItem.yLabel && typeof tooltipItem.yLabel === "number") {
+					label += (tooltipItem.yLabel * 100).toString() + "%";
+				}
+				return label;
 			},
 		},
 	},
+};
+
+const data: ChartData = {
+	labels: labels,
 	datasets: [
 		{
 			label: "10 year death risk",
@@ -86,7 +94,7 @@ function Chart() {
 	return (
 		<div className="chart-container">
 			<h3>UK death tables</h3>
-			<Line data={data} width={700} height={300} options={data.options} />
+			<Line data={data} width={700} height={300} options={options} />
 		</div>
 	);
 }
