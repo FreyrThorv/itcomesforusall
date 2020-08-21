@@ -95,9 +95,9 @@ function App() {
 						<p className="death-percentage">
 							<b>{segment.dying_1_year}</b>
 						</p>
-						<p>Your life current expectancy:</p>
+						<p>Your current life expectancy:</p>
 						<p className="death-percentage">
-							<b>{segment.life_expectancy} years</b>
+							<b>{segment.life_expectancy} years left</b>
 						</p>
 						<Chart gender={gender.value} />
 						<p className="data-source">
