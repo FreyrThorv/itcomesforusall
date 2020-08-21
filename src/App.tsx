@@ -95,7 +95,7 @@ function App() {
 						<p className="death-percentage">
 							<b>{segment.dying_1_year}</b>
 						</p>
-						<Chart />
+						<Chart gender={gender.value} />
 						<p className="data-source">
 							Source:{" "}
 							<a
