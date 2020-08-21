@@ -46,6 +46,7 @@ function Chart(props: propTypes) {
 	const one_year_rate: number[] = getYearlyRiskData(1, gender);
 
 	const options: ChartOptions = {
+		maintainAspectRatio: false,
 		tooltips: {
 			callbacks: {
 				label: function (tooltipItem: ChartTooltipItem, data: ChartData) {
@@ -104,7 +105,7 @@ function Chart(props: propTypes) {
 	return (
 		<div className="chart-container">
 			<h3>UK death tables - {gender}</h3>
-			<Line data={data} width={700} height={300} options={options} />
+			<Line data={data} options={options} />
 		</div>
 	);
 }
