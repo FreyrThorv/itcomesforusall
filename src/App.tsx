@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./App.scss";
 import deathTable from "./uk_life_table.json";
 import Footer from "./Footer";
-import Chart from "./Chart";
+import Results from "./Results";
 
 type AgeOptionType = {
 	value: number;
@@ -82,37 +82,11 @@ function App() {
 						/>
 					</div>
 				) : (
-					<div className="death-results">
-						<p>Your odds of dying in the next 10 years:</p>
-						<p className="death-percentage">
-							<b>{segment.dying_10_year}</b>
-						</p>
-						<p>Your odds of dying in the next 5 years:</p>
-						<p className="death-percentage">
-							<b>{segment.dying_5_year}</b>
-						</p>
-						<p>Your odds of dying in the next 1 year:</p>
-						<p className="death-percentage">
-							<b>{segment.dying_1_year}</b>
-						</p>
-						<p>Average years left:</p>
-						<p className="death-percentage">
-							<b>{segment.life_expectancy} years left</b>
-						</p>
-						<Chart gender={gender.value} />
-						<p className="data-source">
-							Source:{" "}
-							<a
-								target="_blank"
-								rel="noopener noreferrer"
-								href="https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/lifeexpectancies/datasets/nationallifetablesunitedkingdomreferencetables">
-								ONS National life tables for the UK, 2016 - 2018
-							</a>
-						</p>
-						<div className="go-back" onClick={toggleDeathLikelihood}>
-							← back
-						</div>
-					</div>
+					<Results
+						segment={segment}
+						gender={gender}
+						toggleDeathLikelihood={toggleDeathLikelihood}
+					/>
 				)}
 			</div>
 			<Footer />
