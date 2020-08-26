@@ -12,9 +12,3 @@ jobs:
         run: npm install
       - name: Run tests
         run: npm run test
-  deploy:
-    name: Build site on Netlify
-    runs-on: ubuntu-latest
-    steps:
-      - name: Curl request
-        run: curl -X POST -d {} https://api.netlify.com/build_hooks/5f46e5ca7ba52100917fe445
