@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./App.scss";
-import deathTable from "./uk_life_table.json";
+import deathTable from "./data/gb_life_table.json";
 import Footer from "./Footer";
 import Results from "./Results";
 
