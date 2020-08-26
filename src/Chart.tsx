@@ -1,7 +1,7 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
 import { ChartTooltipItem, ChartData, ChartOptions } from "chart.js";
-import deathTable from "./uk_life_table.json";
+import deathTable from "./data/gb_life_table.json";
 
 function getYearlyRiskData(period: number, gender: string) {
 	const periodKey = "dying_" + period + "_year";
