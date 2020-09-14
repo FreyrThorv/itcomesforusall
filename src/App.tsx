@@ -62,7 +62,7 @@ function App() {
 							</select>
 						</div>
 						<div>
-							<label>Gender</label>
+							<label>Sex</label>
 							<select {...gender}>
 								{genderOptions.map((elem) => {
 									return (
